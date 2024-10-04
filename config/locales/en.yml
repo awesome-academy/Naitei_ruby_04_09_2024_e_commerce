@@ -184,6 +184,20 @@ en:
       password_reset: "Password reset"
       greeting: "Hi %{user_name}"
       instruction: "Click the link below to reset your password. The link will expire in %{expire_time} hour."
+    order_confirm:
+      order_confirm: "Order successful"
+      order_success: "Order successful"
+      instruction: "Click the link below to check your order status."
+      link: "Link to order"
+    order_cancel:
+      order_cancel: "Cancel order successful"
+      success: "Cancel successful"
+      instruction: "Click the link below to view your order."
+      link: "Link to order"
+    order_update:
+      order_update: The order has been updated.
+      instruction: "Click on the link below for detailed information."
+      link: "Link to order"
   address:
     full_address: "Name: %{receiver_name}, Address: %{place}, Phone: %{phone}"
   orders:
@@ -240,6 +254,8 @@ en:
     not_found_order: "Order not found!"
     index:
       my_orders: "My orders"
+      all: "All"
+      no_order: "You have no orders."
     order_details:
       receiver_address: "RECEIVER'S ADDRESS"
       delivery_method: "DELIVERY METHOD"

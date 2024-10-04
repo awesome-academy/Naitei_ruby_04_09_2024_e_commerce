@@ -70,8 +70,11 @@ password_confirmation avatar).freeze
                    reset_sent_at: Time.zone.now
   end
 
-  def send_password_reset_email
-    UserMailer.password_reset(self).deliver_now
+  %i(password_reset order_confirm order_cancel
+order_update).each do |email_type|
+    define_method "send_#{email_type}_email" do |*args|
+      UserMailer.send(email_type, self, *args).deliver_now
+    end
   end
 
   def password_reset_expired?
