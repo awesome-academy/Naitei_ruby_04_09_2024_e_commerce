@@ -1,0 +1,26 @@
+<tr class="border-b border-gray-200 hover:bg-gray-100">
+  <td class="py-3 px-6 text-left whitespace-nowrap">
+    <div class="flex items-center">
+      <span class="font-medium"><%= index %></span>
+    </div>
+  </td>
+  <td class="py-3 px-6 text-left">
+    <%= link_to category.name, admin_category_path(category), class: "text-blue-600 hover:underline" %>
+  </td>
+  <td class="py-3 px-6 text-left">
+    <%= category.created_at.strftime("%d-%m-%Y") %>
+  </td>
+  <td class="py-3 px-6 text-center">
+    <div class="flex items-center justify-center">
+      <%= link_to admin_category_path(category), class: "w-4 mr-2 transform hover:text-blue-600 hover:scale-110" do %>
+        <i class="fa fa-eye text-blue-600"></i>
+      <% end %>
+      <%= link_to edit_admin_category_path(category), class: "w-4 mr-2 transform hover:text-yellow-600 hover:scale-110" do %>
+        <i class="fa fa-edit text-yellow-600"></i>
+      <% end %>
+      <%= button_to admin_category_path(category), method: :delete, data: { turbo_confirm: t("admin.categories_admin.index.delete_sure") }, class: "w-4 mr-2 transform hover:text-red-600 hover:scale-110" do %>
+        <i class="fa fa-trash text-red-600"></i>
+      <% end %>
+    </div>
+  </td>
+</tr>

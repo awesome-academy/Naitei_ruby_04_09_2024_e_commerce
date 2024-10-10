@@ -391,4 +391,53 @@ vi:
       copyright: "Bản quyền @2021"
     users_admin:
       not_found: "User not found"
-
+    categories_admin:
+      create:
+        success: "Đã tạo danh mục thành công."
+        failure: "Tạo danh mục thất bại."
+      update:
+        success: "Đã cập nhật danh mục thành công."
+        failure: "Cập nhật danh mục thất bại."
+      destroy:
+        success: "Đã xóa danh mục thành công."
+        failure: "Không thể xóa danh mục."
+        has_products: "Không thể xóa danh mục vì có sản phẩm."
+      not_found: "Không tìm thấy danh mục."
+      show:
+        title: "Danh mục: %{category_name}"
+        category_info: "Thông tin danh mục"
+        name: "Tên"
+        created_at: "Ngày tạo"
+        products_in_category: "Sản phẩm trong danh mục"
+        no_products: "Không có sản phẩm nào."
+        edit: "Chỉnh sửa danh mục"
+        back: "Quay lại danh sách danh mục"
+      new:
+        title: "Thêm Danh Mục Mới"
+      form:
+        name: "Tên Danh Mục"
+        create: "Tạo Danh Mục"
+      index:
+        title: "Danh mục"
+        new: "Thêm danh mục mới"
+        sort_by_id: "Sắp xếp theo ID"
+        sort_by_name: "Sắp xếp theo tên"
+        sort_by_created_at: "Sắp xếp theo ngày tạo"
+        category_id: "ID danh mục"
+        name: "Tên"
+        created_at: "Ngày tạo"
+        actions: "Hành động"
+        delete_sure: "Bạn có chắc chắn muốn xóa danh mục này không?"
+        id: "ID"
+        name: "Tên danh mục"
+        category: "Danh mục"
+        price: "Giá"
+        stock: "Kho"
+        actions: "Hành động"
+      edit:
+        title: "Chỉnh sửa danh mục: %{category_name}"
+        info_title: "Thông tin danh mục"
+        name: "Tên"
+        created_at: "Ngày tạo"
+        cancel: "Hủy"
+        update: "Cập nhật"
