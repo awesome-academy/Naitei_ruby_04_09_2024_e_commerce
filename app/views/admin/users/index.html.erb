@@ -1,0 +1,35 @@
+<div class="h-full ml-14 mb-10 md:ml-64" style="padding-top: 110px;">
+  <h1 class="text-3xl font-bold mb-6"><%= t "admin.users_admin.index.title" %></h1>
+  
+  <div class="mb-4 flex justify-between items-center">
+    <div>
+      <%= link_to t("admin.users_admin.index.sort_by_id"), admin_users_path(sort: "id", direction: params[:direction] == "asc" ? "desc" : "asc"), class: "mr-4 text-primary hover:underline" %>
+      <%= link_to t("admin.users_admin.index.sort_by_user_name"), admin_users_path(sort: "user_name", direction: params[:direction] == "asc" ? "desc" : "asc"), class: "mr-4 text-primary hover:underline" %>
+    </div>
+    <div>
+      <%= form_with url: admin_users_path, method: :get, local: true, class: "inline-block" do %>
+        <%= select_tag :activated, options_for_select([["#{t("admin.users_admin.index.all")}", ""], ["#{t("admin.users_admin.index.activated")}", true], ["#{t("admin.users_admin.index.inactivated")}", false]], params[:activated]), class: "form-select" %>
+        <%= submit_tag t("admin.users_admin.index.filter"), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+      <% end %>
+    </div>
+  </div>
+
+  <table class="min-w-full bg-white border rounded-lg shadow-md overflow-hidden table-fixed">
+    <thead>
+      <tr class="bg-primary text-white uppercase text-sm leading-normal">
+        <th class="py-3 px-6 text-left w-1/12"><%= t "admin.users_admin.index.user_id" %></th>
+        <th class="py-3 px-6 text-left w-3/12"><%= t "admin.users_admin.index.user_name" %></th>
+        <th class="py-3 px-6 text-left w-3/12"><%= t "admin.users_admin.index.email" %></th>
+        <th class="py-3 px-6 text-left w-1/12"><%= t "admin.users_admin.index.role" %></th>
+        <th class="py-3 px-6 text-left w-1/12"><%= t "admin.users_admin.index.status" %></th>
+        <th class="py-3 px-6 text-center w-2/12"><%= t "admin.users_admin.index.actions" %></th>
+      </tr>
+    </thead>
+    <tbody class="text-gray-600 text-sm font-light">
+      <% @users.each_with_index do |user, index| %>
+        <%= render partial: "admin/users/user_item", locals: { user: user, index: index + 1 } %>
+      <% end %>
+    </tbody>
+  </table>
+  <%= render "pagy/pagy_nav", pagy: @pagy %>
+</div>

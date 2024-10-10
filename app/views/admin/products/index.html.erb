@@ -1,0 +1,38 @@
+<div class="h-full ml-14 mb-10 md:ml-64" style="padding-top: 110px;">
+  <h1 class="text-3xl font-bold mb-6"><%= t "admin.products_admin.index.title" %></h1>
+  <div class="flex justify-end items-center mb-4">
+    <%= link_to t("admin.products_admin.index.new"), new_admin_product_path, class: "bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary_hover" %>
+  </div>
+  <div class="mb-4 flex justify-between items-center">
+    <div>
+      <%= link_to t("admin.products_admin.index.sort_by_id"), admin_products_path(sort: "id", direction: params[:direction] == "asc" ? "desc" : "asc"), class: "mr-4 text-primary hover:underline" %>
+      <%= link_to t("admin.products_admin.index.sort_by_name"), admin_products_path(sort: "name", direction: params[:direction] == "asc" ? "desc" : "asc"), class: "mr-4 text-primary hover:underline" %>
+      <%= link_to t("admin.products_admin.index.sort_by_price"), admin_products_path(sort: "price", direction: params[:direction] == "asc" ? "desc" : "asc"), class: "mr-4 text-primary hover:underline" %>
+      <%= link_to t("admin.products_admin.index.sort_by_created_at"), admin_products_path(sort: "created_at", direction: params[:direction] == "asc" ? "desc" : "asc"), class: "text-primary hover:underline" %>
+    </div>
+    <div>
+      <%= form_with url: admin_products_path, method: :get, local: true, class: "inline-block" do %>
+        <%= select_tag :category, options_for_select(@categories, params[:category]), class: "form-select" %>
+        <%= submit_tag t("admin.products_admin.index.filter"), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+      <% end %>
+    </div>
+  </div>
+  <table class="min-w-full bg-white border rounded-lg shadow-md overflow-hidden table-fixed">
+    <thead>
+      <tr class="bg-primary text-white uppercase text-sm leading-normal">
+        <th class="py-3 px-6 text-left w-1/12"><%= t "admin.products_admin.index.product_id" %></th> 
+        <th class="py-3 px-6 text-left w-3/12"><%= t "admin.products_admin.index.name" %></th> 
+        <th class="py-3 px-6 text-left w-2/12"><%= t "admin.products_admin.index.category" %></th> 
+        <th class="py-3 px-6 text-left w-2/12"><%= t "admin.products_admin.index.price" %></th> 
+        <th class="py-3 px-6 text-left w-1/12"><%= t "admin.products_admin.index.stock" %></th> 
+        <th class="py-3 px-6 text-center w-2/12"><%= t "admin.products_admin.index.actions" %></th> 
+      </tr>
+    </thead>
+    <tbody class="text-gray-600 text-sm font-light">
+      <% @products.each_with_index do |product, index| %>
+        <%= render partial: "admin/products/product_item", locals: { product: product, index: index + @pagy.offset + 1 } %>
+      <% end %>
+    </tbody>
+  </table>
+  <%= render "pagy/pagy_nav", pagy: @pagy %>
+</div>

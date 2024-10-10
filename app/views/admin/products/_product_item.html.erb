@@ -1,0 +1,32 @@
+<tr class="border-b border-gray-200 hover:bg-gray-100">
+  <td class="py-3 px-6 text-left whitespace-nowrap">
+    <div class="flex items-center">
+      <span class="font-medium"><%= index %></span>
+    </div>
+  </td>
+  <td class="py-3 px-6 text-left">
+    <%= link_to product.name, admin_product_path(product), class: "text-blue-600 hover:underline" %>
+  </td>
+  <td class="py-3 px-6 text-left">
+    <%= product.category.name if product.category %>
+  </td>
+  <td class="py-3 px-6 text-left">
+    <%= number_to_currency(product.price, unit: "", precision: 0) %> ₫
+  </td>
+  <td class="py-3 px-6 text-left">
+    <%= product.stock %>
+  </td>
+  <td class="py-3 px-6 text-center">
+    <div class="flex items-center justify-center">
+      <%= link_to admin_product_path(product), class: "w-4 mr-2 transform hover:text-blue-600 hover:scale-110" do %>
+        <i class="fa fa-eye text-blue-600"></i> 
+      <% end %>
+      <%= link_to edit_admin_product_path(product), class: "w-4 mr-2 transform hover:text-yellow-600 hover:scale-110" do %>
+        <i class="fa fa-edit text-yellow-600"></i>
+      <% end %>
+      <%= button_to admin_product_path(product), method: :delete, data: {turbo_confirm: t("admin.products_admin.index.delete_sure") }, class: "w-4 mr-2 transform hover:text-red-600 hover:scale-110" do %>
+        <i class="fa fa-trash text-red-600"></i>
+      <% end %>
+    </div>
+  </td>
+</tr>

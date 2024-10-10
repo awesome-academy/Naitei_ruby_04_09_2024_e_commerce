@@ -1,0 +1,25 @@
+<div class="h-full ml-14 mb-10 md:ml-64" style="padding-top: 110px;">
+  <h1 class="text-3xl font-bold mb-6 text-center"><%= t "admin.products_admin.show.title", product_id: @product.id %></h1>
+
+  <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+    <h2 class="text-xl font-semibold mb-4 border-b pb-2"><%= t "admin.products_admin.show.product_info" %></h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <p class="font-medium mb-2"><strong><%= t "admin.products_admin.show.name" %>:</strong> <%= @product.name %></p>
+        <p class="font-medium mb-10"><strong><%= t "admin.products_admin.show.description" %>:</strong> <%= @product.desc %></p>
+        <p class="font-medium mb-2"><strong><%= t "admin.products_admin.show.price" %>:</strong> <%= number_to_currency(@product.price, unit: "", precision: 0) %> ₫</p>
+        <p class="font-medium mb-2"><strong><%= t "admin.products_admin.show.stock" %>:</strong> <%= @product.stock %></p>
+        <p class="font-medium mb-2"><strong><%= t "admin.products_admin.show.rating" %>:</strong> <%= @product.rating %> <i class="fas fa-star text-yellow-500"></i></p>
+        <p class="font-medium mb-2"><strong><%= t "admin.products_admin.show.category" %>:</strong> <%= @product.category.name if @product.category %></p>
+      </div>
+      <div>
+        <img src="<%= product_image(@product) %>" alt="<%= @product.name %>" class="w-full h-auto rounded-lg shadow-md" />
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 flex justify-end space-x-4">
+    <%= link_to t("admin.products_admin.show.edit"), edit_admin_product_path(@product), class: "bg-primary hover:bg-primary_hover text-white font-bold py-2 px-4 rounded-lg" %>
+    <%= link_to t("admin.products_admin.show.back"), admin_products_path, class: "bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg" %>
+  </div>
+</div>

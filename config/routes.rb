@@ -45,7 +45,12 @@ Rails.application.routes.draw do
     namespace :admin do
       get "dashboard", to: "dashboard#index", as: "dashboard"
       resources :orders
-      resources :users 
+      resources :users do
+        member do
+          patch :toggle_activation
+        end
+      end
+      resources :products
     end
   end
 end

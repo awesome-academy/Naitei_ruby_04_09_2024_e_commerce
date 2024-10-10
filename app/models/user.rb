@@ -2,6 +2,7 @@ class User < ApplicationRecord
   SIGN_UP_REQUIRE_ATTRIBUTES = %i(user_name email password
 password_confirmation avatar).freeze
   RESET_PARAMS = %i(password password_confirmation).freeze
+  USER_ADMIN_ATTRIBUTES = %i(user_name email role activated).freeze
   attr_accessor :remember_token, :reset_token
 
   has_one_attached :avatar do |attachable|
@@ -30,6 +31,17 @@ password_confirmation avatar).freeze
             presence: true,
             length: {minimum: Settings.value.min_user_password},
             allow_nil: true
+
+  scope :by_activation_status, lambda {|status|
+                                 where(activated: status) if status.present?
+                               }
+  scope :sorted, lambda {|column, direction|
+    order("#{column} #{direction}") if column.present?
+  }
+  scope :filtered_and_sorted, lambda {|params|
+    by_activation_status(params[:activated])
+      .sorted(params[:sort], params[:direction])
+  }
 
   has_secure_password
 

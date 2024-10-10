@@ -1,0 +1,46 @@
+<div class="h-full ml-14 mb-10 md:ml-64" style="padding-top: 110px;">
+  <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center">
+    <%= t("admin.products_admin.edit.title", product_id: @product.id) %>
+  </h1>
+  <%= form_with(model: [:admin, @product], local: true) do |f| %>
+    <div class="bg-white p-8 rounded-lg shadow-md mb-8">
+      <h2 class="text-2xl font-semibold text-gray-700 mb-6 border-b pb-2">
+        <%= t("admin.products_admin.edit.info_title") %>
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <div class="mb-4">
+            <%= f.label :name, t("admin.products_admin.edit.name"), class: "font-medium mb-2" %>
+            <%= f.text_field :name, class: "block mt-2 w-full border border-gray-300 rounded-lg px-3 py-2" %>
+          </div>
+          <div class="mb-4">
+            <%= f.label :price, t("admin.products_admin.edit.price"), class: "font-medium mb-2" %>
+            <%= f.number_field :price, class: "block mt-2 w-full border border-gray-300 rounded-lg px-3 py-2" %>
+          </div>
+          <div class="mb-4">
+            <%= f.label :stock, t("admin.products_admin.edit.stock"), class: "font-medium mb-2" %>
+            <%= f.number_field :stock, class: "block mt-2 w-full border border-gray-300 rounded-lg px-3 py-2" %>
+          </div>
+        </div>
+        <div>
+          <div class="mb-4">
+            <%= f.label :category_id, t("admin.products_admin.edit.category"), class: "font-medium mb-2" %>
+            <%= f.collection_select :category_id, Category.all, :id, :name, class: "block mt-2 w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-primary focus:border-primary" %>
+          </div>
+          <div class="mb-4">
+            <%= f.label :img_url, t("admin.products_admin.edit.img_url"), class: "font-medium mb-2" %>
+            <%= f.text_field :img_url, class: "block mt-2 w-full border border-gray-300 rounded-lg px-3 py-2" %>
+          </div>
+          <div class="mb-4">
+            <%= f.label :rating, t("admin.products_admin.edit.rating"), class: "font-medium mb-2" %>
+            <%= f.text_field :rating, value: @product.rating, class: "block mt-2 w-full border border-gray-300 rounded-lg px-3 py-2", disabled: true %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-8 flex justify-end space-x-4">
+      <%= link_to t("admin.products_admin.edit.cancel"), admin_products_path, class: "bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg shadow-md" %>
+      <%= f.submit t("admin.products_admin.edit.update"), class: "bg-primary hover:bg-primary_hover text-white font-bold py-3 px-6 rounded-lg shadow-md" %>
+    </div>
+  <% end %>
+</div>
