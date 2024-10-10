@@ -1,0 +1,26 @@
+<tr class="border-b border-gray-200 hover:bg-gray-100">
+  <td class="py-3 px-6 text-left whitespace-nowrap">
+    <div class="flex items-center">
+      <span class="font-medium"><%= index %>
+    </div>
+  </td>
+  <td class="py-3 px-6 text-left">
+    <%= link_to product_item.name, admin_product_path(product_item), class: "text-blue-600 hover:underline" %>
+  </td>
+  <td class="py-3 px-6 text-left">
+    <%= product_item.category.name if product_item.category %>
+  </td>
+  <td class="py-3 px-6 text-left">
+    <%= number_to_currency(product_item.price, unit: "", precision: 0) %> ₫
+  </td>
+  <td class="py-3 px-6 text-left">
+    <%= product_item.stock %>
+  </td>
+  <td class="py-3 px-6 text-center">
+    <div class="flex items-center justify-center">
+      <%= link_to admin_product_path(product_item), class: "w-4 mr-2 transform hover:text-blue-600 hover:scale-110" do %>
+        <i class="fa fa-eye text-blue-600"></i> 
+      <% end %>
+    </div>
+  </td>
+</tr>

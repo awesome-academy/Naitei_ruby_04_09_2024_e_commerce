@@ -363,3 +363,53 @@ en:
       copyright: "Copyright @2021"
     users_admin:
       not_found: "User not found"
+    categories_admin:
+      create:
+        success: "Category was successfully created."
+        failure: "Failed to create category."
+      update:
+        success: "Category was successfully updated."
+        failure: "Failed to update category."
+      destroy:
+        success: "Category was successfully deleted."
+        failure: "Failed to delete category."
+        has_products: "Cannot delete category because it has products."
+      not_found: "Category not found."
+      show:
+        title: "Category: %{category_name}"
+        category_info: "Category Information"
+        name: "Name"
+        created_at: "Created At"
+        products_in_category: "Products in Category"
+        no_products: "No products available."
+        edit: "Edit Category"
+        back: "Back to Categories"
+      new:
+        title: "New Category"
+      form:
+        name: "Category Name"
+        create: "Create Category"
+      index:
+        title: "Categories"
+        new: "New Category"
+        sort_by_id: "Sort by ID"
+        sort_by_name: "Sort by Name"
+        sort_by_created_at: "Sort by Created At"
+        category_id: "Category ID"
+        name: "Name"
+        created_at: "Created At"
+        actions: "Actions"
+        delete_sure: "Are you sure you want to delete this category?"
+        id: "ID"
+        name: "Category Name"
+        category: "Category"
+        price: "Price"
+        stock: "Stock"
+        actions: "Actions"
+      edit:
+        title: "Edit Category: %{category_name}"
+        info_title: "Category Information"
+        name: "Name"
+        created_at: "Created At"
+        cancel: "Cancel"
+        update: "Update"
