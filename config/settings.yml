@@ -18,5 +18,6 @@ ui:
   img_accept_format: "image/jpeg,image/gif,image/png"
   address_limit: 3
   cart_items: 5
+  reviews_limit: 5
 index_size: 4
 page_size: 8

@@ -5,7 +5,11 @@ class ProductsController < ApplicationController
     @product_count = Product.count
   end
 
-  def show; end
+  def show
+    @pagy, @reviews = pagy @product.reviews.includes(:user),
+                           limit: Settings.ui.reviews_limit
+    @reviews_count = @reviews.count
+  end
 
   private
   def set_product

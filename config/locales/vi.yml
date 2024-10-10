@@ -197,6 +197,20 @@ vi:
       greeting: "Chào %{user_name}"
       instruction: "Nhấn vào đường dẫn bên dưới để đặt lại mật khẩu. Đường dẫn sẽ khả dụng trong vòng %{expire_time} giờ."
       reset: "Đặt lại mật khẩu"
+    order_confirm:
+      order_confirm: "Đặt hàng thành công"
+      order_success: "Đặt hàng thành công"
+      instruction: "Nhấp vào liên kết bên dưới để kiểm tra trạng thái đơn hàng của bạn." 
+      link: "Tới đơn hàng"
+    order_cancel:
+      order_cancel: "Hủy đơn hàng thành công"
+      success: "Hủy thành công"
+      instruction: "Nhấn vào liên kết bên dưới để xem đơn hàng của bạn."
+      link: "Liên kết đến đơn hàng"
+    order_update:
+      order_update: "Đơn hàng đã được cập nhật."
+      instruction: "Trạng thái đơn hàng của bạn đã được cập nhật. Nhấn vào link bên dưới để biết thông tin chi tiết."
+      link: "Link đến đơn hàng"
   address:
     full_address: "Tên: %{receiver_name}, Địa chỉ: %{place}, Số điện thoại: %{phone}"
   orders: 
@@ -260,6 +274,8 @@ vi:
     not_found_order: "Không tìm thấy đơn hàng!"
     index:
       my_orders: "Đơn hàng của tôi"
+      all: "Tất cả"
+      no_order: "Bạn không có đơn hàng nào"
     order_details:
       receiver_address: "ĐỊA CHỈ NGƯỜI NHẬN"
       delivery_method: "HÌNH THỨC GIAO HÀNG"

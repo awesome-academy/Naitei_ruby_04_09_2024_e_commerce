@@ -19,6 +19,7 @@ class OrdersController < ApplicationController
     if @order.save
       save_order_items(@order)
       clear_cart
+      current_user.send_order_confirm_email @order
       redirect_to order_path(@order)
     else
       flash.now[:alert] = t ".order_fail"
@@ -27,8 +28,10 @@ class OrdersController < ApplicationController
   end
 
   def index
+    @orders = @user.orders.with_status(params[:status])
+
     @pagy, @orders = pagy(
-      @user.orders.includes(:address, order_items: :product),
+      @orders.ordered_by_updated_at.includes(:address, order_items: :product),
       limit: Settings.ui.address_limit
     )
   end
@@ -138,6 +141,7 @@ class OrdersController < ApplicationController
       end
       @product = Product.find order_item.product_id
       @product.increment! :stock, order_item.quantity
+      current_user.send_order_cancel_email @order
     end
   end
 

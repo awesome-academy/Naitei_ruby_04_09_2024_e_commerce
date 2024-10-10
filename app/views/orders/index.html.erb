@@ -5,9 +5,30 @@
   </div>
   <div class="col-span-9 px-[50px] py-[20px] bg-white rounded-lg drop-shadow-lg">
     <h2 class="text-primary font-bold text-xl mb-3"><%= t ".my_orders" %></h2>
-    <div class="flex flex-col gap-5 mb-3">
-      <%= render @orders %>
-    </div>
-    <%== pagy_nav @pagy %>
+    <div class="flex gap-3 mb-3">
+      <%= link_to user_orders_path(current_user) do %>
+        <span class="text-center text-sm px-2 py-1 rounded-full font-medium text-sky-500 bg-sky-200">
+          ● <%= t ".all" %>
+        </span>
+      <% end %>
+      <% Order.statuses.each do |key, value| %>
+        <%= link_to status_user_orders_path(status: key), class: "flex items-center" do %>
+          <span class="text-center text-sm px-2 py-1 rounded-full font-medium <%= status_color(key) %>">
+            ● <%= t "activerecord.attributes.order.statuses.#{key}" %>
+          </span>
+        <% end %>
+      <% end %>
+    </div >
+    <% if @orders.count > 0 %>
+      <div class="flex flex-col gap-5 mb-3">
+        <%= render @orders %>
+      </div>
+      <%== pagy_nav @pagy if @pagy.pages > 1 %>
+    <% else %>
+      <div class="flex justify-center flex-col items-center mt-[50px] text-2xl font-bold text-primary_hover">
+        <%= image_tag "no-order.png", class: "h-[150px]" %>
+        <%= t ".no_order" %>
+      </div>
+    <% end %>
   </div>
 </div>

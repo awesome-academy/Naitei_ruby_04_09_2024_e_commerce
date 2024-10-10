@@ -26,6 +26,9 @@ Rails.application.routes.draw do
         resources :products, only: [] do
           resources :reviews, only: %i(new create edit update destroy)
         end
+        collection do
+          get :status, action: :index
+        end
       end
     end
     resources :categories do
