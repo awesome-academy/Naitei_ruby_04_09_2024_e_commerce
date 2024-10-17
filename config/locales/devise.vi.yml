@@ -19,6 +19,11 @@ vi:
         subject: "Hướng dẫn xác nhận"
       reset_password_instructions:
         subject: "Hướng dẫn khôi phục mật khẩu"
+        greeting: "Xin chào %{email}!"
+        request_message: "Có ai đó đã yêu cầu một liên kết để thay đổi mật khẩu của bạn. Bạn có thể làm điều này thông qua liên kết bên dưới."
+        change_link: "Thay đổi mật khẩu của tôi"
+        ignore_message: "Nếu bạn không yêu cầu điều này, hãy bỏ qua email này."
+        reminder: "Mật khẩu của bạn sẽ không thay đổi cho đến khi bạn truy cập vào liên kết trên và tạo một mật khẩu mới."
       unlock_instructions:
         subject: "Hướng dẫn mở khóa"
       email_changed:
@@ -34,6 +39,15 @@ vi:
       send_paranoid_instructions: "Nếu địa chỉ email của bạn tồn tại trong cơ sở dữ liệu của chúng tôi, bạn sẽ nhận được một liên kết khôi phục mật khẩu tại địa chỉ email của bạn trong vài phút."
       updated: "Mật khẩu của bạn đã được thay đổi thành công. Bạn hiện đang đăng nhập."
       updated_not_active: "Mật khẩu của bạn đã được thay đổi thành công."
+      edit:
+        title: "Thay đổi mật khẩu của bạn"
+        password: "Mật khẩu mới"
+        password_confirmation: "Xác nhận mật khẩu mới"
+        change: "Thay đổi mật khẩu của tôi"
+      new:
+        title: "Quên mật khẩu?"
+        email: "Địa chỉ email"
+        send_instructions: "Gửi cho tôi hướng dẫn đặt lại mật khẩu"
     registrations:
       destroyed: "Tạm biệt! Tài khoản của bạn đã bị hủy thành công. Chúng tôi hy vọng sẽ gặp lại bạn sớm."
       signed_up: "Chào mừng! Bạn đã đăng ký thành công."
