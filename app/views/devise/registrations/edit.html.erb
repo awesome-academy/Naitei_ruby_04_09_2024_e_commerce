@@ -1,0 +1,47 @@
+<%= render "shared/profile_breadcrumb" %>
+<div class="grid grid-cols-12 mb-[50px]">
+  <div class="col-span-3">
+    <%= render "shared/profile_sidebar" %>
+  </div>
+  <div class="col-span-9 px-[50px] py-[30px] bg-white rounded-lg drop-shadow-lg">
+    <div class="flex items-center gap-3">
+      <%= link_to user_path(resource) do %>
+        <i class="fa-solid fa-arrow-left text-primary"></i>
+      <% end %>
+      <h2 class="text-primary font-bold text-xl"><%= t ".edit_account" %></h2>
+    </div>
+    <div class="ml-[30px] mt-[50px] flex justify-center">
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        <div class="flex flex-col gap-[10px] justify-center items-center">
+          <%= f.label :avatar, t(".avatar"), class: "font-bold" %>
+          <%= user_avatar @user, class: "w-[120px] h-[120px] rounded-full" %>
+          <span class="image"><%= f.file_field :avatar, accept: Settings.ui.img_accept_format %></span>
+        </div>
+        <div class="field field flex flex-col w-full mb-2">
+          <%= f.label :user_name, t(".user_name"), class: "font-bold" %>
+          <%= f.text_field :user_name %>
+        </div>
+        <div class="field field flex flex-col w-full mb-2">
+          <%= f.label :email, t(".email"), class: "font-bold" %>
+          <%= f.text_field :email, autofocus: true, autocomplete: "email" %>
+        </div>
+        <div class="field field flex flex-col w-full mb-2">
+          <p><%= f.label :password, t(".password"), class: "font-bold" %> <i>(<%= t(".password_hint") %>)</i></p>
+          <%= f.password_field :password, autocomplete: "new-password" %>
+        </div>
+        <div class="field field flex flex-col w-full mb-2">
+          <%= f.label :password_confirmation, t(".password_confirmation"), class: "font-bold" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+        </div>
+        <div class="field field flex flex-col w-full mb-2">
+          <p><%= f.label :current_password, t(".current_password"), class: "font-bold" %> <i>(<%= t(".current_password_hint") %>)</i></p>
+          <%= f.password_field :current_password, autocomplete: "current-password" %>
+        </div>
+        <div class="actions px-4 py-2 bg-primary text-white rounded-sm hover:opacity-70 text-lg flex items-center justify-center">
+          <%= f.submit t(".update") %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

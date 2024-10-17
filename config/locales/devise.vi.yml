@@ -64,7 +64,17 @@ vi:
         password: "Mật khẩu"
         password_confirmation: "Xác nhận mật khẩu"
         sign_up: "Đăng ký"
-
+      edit:
+        edit_account: "Chỉnh sửa tài khoản"
+        avatar: "Ảnh đại diện"
+        user_name: "Tên người dùng"
+        email: "Email"
+        password: "Mật khẩu"
+        password_confirmation: "Xác nhận mật khẩu"
+        current_password: "Mật khẩu hiện tại"
+        password_hint: "Để trống nếu không muốn thay đổi"
+        current_password_hint: "Cần nhập để xác nhận thay đổi"
+        update: "Cập nhật"
     sessions:
       signed_in: "Đăng nhập thành công."
       signed_out: "Đăng xuất thành công."
