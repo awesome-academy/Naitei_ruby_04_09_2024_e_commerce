@@ -60,7 +60,7 @@ password_confirmation avatar).freeze
   end
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :lockable
 
   %i(password_reset order_confirm order_cancel
 order_update).each do |email_type|
