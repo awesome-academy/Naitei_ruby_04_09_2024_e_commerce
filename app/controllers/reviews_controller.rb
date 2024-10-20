@@ -1,9 +1,11 @@
 class ReviewsController < ApplicationController
-  before_action :find_user, :logged_in_user, :correct_user,
+  before_action :find_user, :logged_in_user
+  load_and_authorize_resource :order
+  load_and_authorize_resource :product, through: :order
+  load_and_authorize_resource :review, through: :product, except: %i(new create)
+  before_action :check_order_delivered,
                 only: %i(new create edit update destroy)
-  before_action :find_order, :find_product, :check_order_delivered,
-                only: %i(new create edit update destroy)
-  before_action :find_review, only: %i(edit update destroy)
+
   before_action :check_review, only: %i(new create)
 
   def new

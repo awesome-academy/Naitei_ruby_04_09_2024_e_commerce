@@ -658,3 +658,5 @@ vi:
     notification: "Thông báo"
     no_new_notifications: "Không có thông báo nào mới."
     ago: "trước"
+  cancan:
+    access_denied: "Bạn không có quyền truy cập trang này."
