@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users, only: :omniauth_callbacks, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   scope "(:locale)", locale: /en|vi/ do
     root "static_pages#home"
     get "/static_pages/home"
@@ -16,9 +17,8 @@ Rails.application.routes.draw do
     get "/login", to: "sessions#new"
     post "/login", to: "sessions#create"
     delete "/logout", to: "sessions#destroy"
-    devise_for :users, controllers: {
-      registrations: 'users/registrations'
-    }
+    devise_for :users, skip: :omniauth_callbacks,
+    controllers: {registrations: "users/registrations"}
     as :user do
       get "signin" => "devise/sessions#new"   
       post "signin" => "devise/sessions#create" 
@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     resources :users do
       resources :addresses, except: :show
       resources :orders, only: %i(index order_details) do
-        get 'order_details', to: 'orders#order_details', as: :order_details
+        get "order_details", to: "orders#order_details", as: :order_details
         member do
           patch :cancel
         end

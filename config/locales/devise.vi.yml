@@ -114,3 +114,4 @@ vi:
     confirmation_instructions: "Không nhận được hướng dẫn xác nhận?"
     unlock_instructions: "Không nhận được hướng dẫn mở khóa?"
     sign_in_with: "Đăng nhập với %{provider}"
+    or_sign_in_with: "Hoặc đăng nhập với"
