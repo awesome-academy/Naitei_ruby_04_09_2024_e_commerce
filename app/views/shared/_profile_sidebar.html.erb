@@ -5,8 +5,8 @@
   </section>
   <ul>
     <h2 class="font-bold"><%= t ".manage_account" %></h2>
-    <li class="ml-[20px] mt-[10px] <%= current_page?(edit_user_path(@user)) ? "text-primary" : "" %>">
-      <%= link_to t(".profile"), edit_user_path(@user) %>
+    <li class="ml-[20px] mt-[10px] <%= current_page?(edit_user_registration_path) ? "text-primary" : "" %>">
+      <%= link_to t(".profile"), edit_user_registration_path %>
     </li>
     <li class="ml-[20px] mt-[10px] <%= current_page?(user_addresses_path(@user)) ? "text-primary" : "" %>">
       <%= link_to t(".address"), user_addresses_path(@user) %>
