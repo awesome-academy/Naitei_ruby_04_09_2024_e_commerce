@@ -21,6 +21,11 @@ en:
         subject: "Confirmation instructions"
       reset_password_instructions:
         subject: "Reset password instructions"
+        greeting: "Hello %{email}!"
+        request_message: "Someone has requested a link to change your password. You can do this through the link below."
+        change_link: "Change my password"
+        ignore_message: "If you didn't request this, please ignore this email."
+        reminder: "Your password won't change until you access the link above and create a new one."
       unlock_instructions:
         subject: "Unlock instructions"
       email_changed:
@@ -36,6 +41,15 @@ en:
       send_paranoid_instructions: "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes."
       updated: "Your password has been changed successfully. You are now signed in."
       updated_not_active: "Your password has been changed successfully."
+      edit:
+        title: "Change your password"
+        password: "New password"
+        password_confirmation: "Confirm new password"
+        change: "Change my password"
+      new:
+        title: "Forgot your password?"
+        email: "Email address"
+        send_instructions: "Send me reset password instructions"
     registrations:
       destroyed: "Bye! Your account has been successfully cancelled. We hope to see you again soon."
       signed_up: "Welcome! You have signed up successfully."
