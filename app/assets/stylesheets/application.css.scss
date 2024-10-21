@@ -14,3 +14,13 @@
  *= require_self
  */
 @import "font-awesome";
+@import "./_color.scss";
+
+.field_with_errors {
+  display: inline;
+  color: $red;
+  font-weight: $red;
+  input {
+    border: solid 1px $red;
+  }
+}

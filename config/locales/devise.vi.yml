@@ -43,6 +43,14 @@ vi:
       update_needs_confirmation: "Bạn đã cập nhật tài khoản của mình thành công, nhưng chúng tôi cần xác minh địa chỉ email mới của bạn. Vui lòng kiểm tra email và theo liên kết xác nhận để xác nhận địa chỉ email mới của bạn."
       updated: "Tài khoản của bạn đã được cập nhật thành công."
       updated_but_not_signed_in: "Tài khoản của bạn đã được cập nhật thành công, nhưng vì mật khẩu của bạn đã được thay đổi, bạn cần đăng nhập lại."
+      new:
+        sign_up: "Đăng ký"
+        user_name: "Tên người dùng"
+        email: "Email"
+        password: "Mật khẩu"
+        password_confirmation: "Xác nhận mật khẩu"
+        sign_up: "Đăng ký"
+
     sessions:
       signed_in: "Đăng nhập thành công."
       signed_out: "Đăng xuất thành công."
@@ -65,8 +73,8 @@ vi:
       not_found: "không tìm thấy"
       not_locked: "không bị khóa"
       not_saved:
-        one: "1 lỗi đã cấm %{resource} này được lưu lại:"
-        other: "%{count} lỗi đã cấm %{resource} này được lưu lại:"
+        one: "Biểu mẫu này chứa %{count} lỗi:"
+        other: "Biểu mẫu này chứa %{count} lỗi:"
   links:
     log_in: "Đăng nhập"
     sign_up: "Đăng ký"

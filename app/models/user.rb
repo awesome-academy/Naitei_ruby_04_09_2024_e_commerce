@@ -3,7 +3,6 @@ class User < ApplicationRecord
 password_confirmation avatar).freeze
   RESET_PARAMS = %i(password password_confirmation).freeze
   USER_ADMIN_ATTRIBUTES = %i(user_name email role activated).freeze
-  attr_accessor :remember_token, :reset_token
 
   has_one_attached :avatar do |attachable|
     attachable.variant :display, resize_to_limit: [Settings.ui.avatar_size,
