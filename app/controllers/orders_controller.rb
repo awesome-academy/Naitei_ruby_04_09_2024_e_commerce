@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
     if @order.save
       save_order_items(@order)
       clear_cart
-      current_user.send_order_confirm_email @order
+      OrderEmailJob.perform_later(@order, current_user, :confirm)
       redirect_to order_path(@order)
     else
       flash.now[:alert] = t ".order_fail"
@@ -141,7 +141,7 @@ class OrdersController < ApplicationController
       end
       @product = Product.find order_item.product_id
       @product.increment! :stock, order_item.quantity
-      current_user.send_order_cancel_email @order
+      OrderEmailJob.perform_later(@order, current_user, :cancel)
     end
   end
 
