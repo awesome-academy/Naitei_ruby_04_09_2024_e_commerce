@@ -22,7 +22,7 @@ class Admin::OrdersController < Admin::AdminController
       @order.update!(order_params)
       @order.address.update!(address_params)
       flash[:success] = t("admin.orders_admin.update.success")
-      @order.user.send_order_update_email @order
+      OrderEmailJob.perform_later(@order, @order.user, :update)
       redirect_to admin_order_path(@order)
     rescue ActiveRecord::RecordInvalid => e
       handle_update_error(e)

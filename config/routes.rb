@@ -68,6 +68,9 @@ Rails.application.routes.draw do
       resources :products
       resources :categories
       resources :reviews
+      require "sidekiq/web"
+      mount Sidekiq::Web => "/sidekiq"
     end
+
   end
 end
