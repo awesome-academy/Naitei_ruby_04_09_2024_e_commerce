@@ -19,53 +19,71 @@
       <% end %>
     </div>
   </div>
-
-  <table class="min-w-full bg-white border rounded-lg shadow-md overflow-hidden table-fixed">
-    <thead>
-      <tr class="bg-primary text-white uppercase text-sm leading-normal">
-        <th class="py-3 px-6 text-left w-1/12 border-r border-gray-200">
-          <%= t "admin.orders_admin.index.order_id" %>
-        </th> 
-        <th class="py-3 px-6 text-left w-1/12 border-r border-gray-200">
-          <%= t "admin.orders_admin.index.user" %>
-        </th> 
-        <th class="py-3 px-6 text-left w-4/12 border-r border-gray-200">
-          <%= t "admin.orders_admin.index.address" %>
-        </th> 
-        <th class="py-3 px-6 text-left w-2/12 border-r border-gray-200">
-          <%= t "admin.orders_admin.index.payment_method" %>
-        </th> 
-        <th class="py-3 px-6 text-center w-1/12 border-r border-gray-200">
-          <%= t "admin.orders_admin.index.status" %>
-        </th> 
-        <th class="py-3 px-6 text-right w-1/12 border-r border-gray-200">
-          <div class="flex justify-between items-center">
-            <span class="flex-grow"><%= t "admin.orders_admin.index.total" %></span>
-            <%= link_to admin_orders_path(sort: "total", direction: params[:direction] == "asc" ? "desc" : "asc"), class: "text-white hover:text-gray-400 ml-2" do %>
-              <i class="fa fa-sort-alpha-<%= params[:direction] == 'asc' ? 'up' : 'down' %>"></i>
-            <% end %>
-          </div>
-        </th> 
-        <th class="py-3 px-6 text-center w-1/12 border-r border-gray-200">
-          <div class="flex justify-between items-center">
-            <span class="flex-grow"><%= t "admin.orders_admin.index.created_at" %></span>
-            <%= link_to admin_orders_path(sort: "created_at", direction: params[:direction] == "asc" ? "desc" : "asc"), class: "text-white hover:text-gray-400 ml-2" do %>
-              <i class="fa fa-sort-alpha-<%= params[:direction] == 'asc' ? 'up' : 'down' %>"></i>
-            <% end %>
-          </div>
-        </th> 
-        <th class="py-3 px-6 text-center w-1/12">
-          <%= t "admin.orders_admin.index.actions" %>
-        </th> 
-      </tr>
-    </thead>
-    <tbody class="text-gray-600 text-sm font-light">
-      <% @orders.each_with_index do |order, index| %>
-        <%= render partial: "admin/orders/order_item", locals: { order: order, index: index + 1 } %>
-      <% end %>
-    </tbody>
-  </table>
-  <div style="display: flex; justify-content: center;">
-    <%= render "pagy/pagy_nav", pagy: @pagy %>
-  </div>
+  <%= form_with url: batch_update_admin_orders_path, method: :patch, local: true do %>
+    <table class="min-w-full bg-white border rounded-lg shadow-md overflow-hidden table-fixed">
+      <thead>
+        <tr class="bg-primary text-white uppercase text-sm leading-normal">
+          <th class="py-3 px-6 text-left w-1/12 border-r border-gray-200">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 mr-2">
+                <%= check_box_tag "select_all", nil, false, id: "select_all" %>
+              </div>
+              <div class="flex-grow text-center">
+                <%= t "admin.orders_admin.index.order_id" %>
+              </div>
+            </div>
+          </th>
+          <th class="py-3 px-6 text-left w-1/12 border-r border-gray-200">
+            <%= t "admin.orders_admin.index.user" %>
+          </th> 
+          <th class="py-3 px-6 text-left w-4/12 border-r border-gray-200">
+            <%= t "admin.orders_admin.index.address" %>
+          </th> 
+          <th class="py-3 px-6 text-left w-2/12 border-r border-gray-200">
+            <%= t "admin.orders_admin.index.payment_method" %>
+          </th> 
+          <th class="py-3 px-6 text-center w-1/12 border-r border-gray-200">
+            <%= t "admin.orders_admin.index.status" %>
+          </th> 
+          <th class="py-3 px-6 text-right w-1/12 border-r border-gray-200">
+            <div class="flex justify-between items-center">
+              <span class="flex-grow"><%= t "admin.orders_admin.index.total" %></span>
+              <%= link_to admin_orders_path(sort: "total", direction: params[:direction] == "asc" ? "desc" : "asc"), class: "text-white hover:text-gray-400 ml-2" do %>
+                <i class="fa fa-sort-alpha-<%= params[:direction] == 'asc' ? 'up' : 'down' %>"></i>
+              <% end %>
+            </div>
+          </th> 
+          <th class="py-3 px-6 text-center w-1/12 border-r border-gray-200">
+            <div class="flex justify-between items-center">
+              <span class="flex-grow"><%= t "admin.orders_admin.index.created_at" %></span>
+              <%= link_to admin_orders_path(sort: "created_at", direction: params[:direction] == "asc" ? "desc" : "asc"), class: "text-white hover:text-gray-400 ml-2" do %>
+                <i class="fa fa-sort-alpha-<%= params[:direction] == 'asc' ? 'up' : 'down' %>"></i>
+              <% end %>
+            </div>
+          </th> 
+          <th class="py-3 px-6 text-center w-1/12">
+            <%= t "admin.orders_admin.index.actions" %>
+          </th> 
+        </tr>
+      </thead>
+      <tbody class="text-gray-600 text-sm font-light">
+        <% @orders.each_with_index do |order, index| %>
+          <tr>
+            <%= render partial: "admin/orders/order_item", locals: { order: order, index: index + 1 } %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div style="display: flex; justify-content: center;">
+      <%= render "pagy/pagy_nav", pagy: @pagy %>
+    </div>
+    <div class="flex justify-between mt-4">
+      <div class="flex items-center">
+        <%= status_update_select_tag(params[:status]) %>
+      </div>
+      <%= submit_tag t("admin.orders_admin.index.batch_update"), class: "bg-primary text-white px-4 py-2 rounded hover:bg-green-700" %>
+    </div>
+  <% end %>
+  <%= javascript_include_tag "order_batch_update" %>
 </div>
+
