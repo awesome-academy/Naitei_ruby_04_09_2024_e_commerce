@@ -6,9 +6,10 @@
       <i class="fa fa-sync-alt"></i>
     <% end %>
     <div class="flex-grow mx-4 flex justify-center">
-      <%= form_with url: admin_orders_path, method: :get, local: true do %>
-        <%= text_field_tag :user_name, params[:user_name], placeholder: t("admin.orders_admin.index.search_by_name"), class: "border rounded-lg py-2 px-4 mr-2" %>
-        <%= submit_tag t("admin.orders_admin.index.search"), class: "bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary_hover" %>
+      <%= search_form_for @q, url: admin_orders_path, method: :get, local: true do |f| %>
+        <%= f.label :search, t("admin.orders_admin.index.search_by_name"), class: "sr-only" %>
+        <%= f.text_field :search, value: params.dig(:q, :search), placeholder: t("admin.orders_admin.index.search_by_name"), class: "border rounded-lg py-2 px-4 mr-2",  style: "width: 300px;" %>
+        <%= f.submit t("admin.orders_admin.index.search"), class: "bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary_hover" %>
       <% end %>
     </div>
     <div>
@@ -28,40 +29,34 @@
               <div class="flex-shrink-0 mr-2">
                 <%= check_box_tag "select_all", nil, false, id: "select_all" %>
               </div>
-              <div class="flex-grow text-center">
+              <div class="flex-grow text-center whitespace-nowrap">
                 <%= t "admin.orders_admin.index.order_id" %>
               </div>
             </div>
           </th>
-          <th class="py-3 px-6 text-left w-1/12 border-r border-gray-200">
+          <th class="py-3 px-6 text-left w-1/12 border-r border-gray-200 whitespace-nowrap">
             <%= t "admin.orders_admin.index.user" %>
           </th> 
           <th class="py-3 px-6 text-left w-4/12 border-r border-gray-200">
             <%= t "admin.orders_admin.index.address" %>
           </th> 
-          <th class="py-3 px-6 text-left w-2/12 border-r border-gray-200">
+          <th class="py-3 px-6 text-left w-2/12 border-r border-gray-200 whitespace-nowrap">
             <%= t "admin.orders_admin.index.payment_method" %>
           </th> 
           <th class="py-3 px-6 text-center w-1/12 border-r border-gray-200">
             <%= t "admin.orders_admin.index.status" %>
           </th> 
           <th class="py-3 px-6 text-right w-1/12 border-r border-gray-200">
-            <div class="flex justify-between items-center">
-              <span class="flex-grow"><%= t "admin.orders_admin.index.total" %></span>
-              <%= link_to admin_orders_path(sort: "total", direction: params[:direction] == "asc" ? "desc" : "asc"), class: "text-white hover:text-gray-400 ml-2" do %>
-                <i class="fa fa-sort-alpha-<%= params[:direction] == 'asc' ? 'up' : 'down' %>"></i>
-              <% end %>
+            <div class="flex justify-between items-center whitespace-nowrap">
+              <span class="flex-grow"><%= sort_link(@q, :total, t("admin.orders_admin.index.total")) %></span>
             </div>
-          </th> 
-          <th class="py-3 px-6 text-center w-1/12 border-r border-gray-200">
-            <div class="flex justify-between items-center">
-              <span class="flex-grow"><%= t "admin.orders_admin.index.created_at" %></span>
-              <%= link_to admin_orders_path(sort: "created_at", direction: params[:direction] == "asc" ? "desc" : "asc"), class: "text-white hover:text-gray-400 ml-2" do %>
-                <i class="fa fa-sort-alpha-<%= params[:direction] == 'asc' ? 'up' : 'down' %>"></i>
-              <% end %>
+          </th>
+          <th class="py-3 px-6 text-right w-1/12 border-r border-gray-200">
+            <div class="flex justify-between items-center whitespace-nowrap">
+              <span class="flex-grow"><%= sort_link(@q, :total, t("admin.orders_admin.index.created_at")) %></span>
             </div>
-          </th> 
-          <th class="py-3 px-6 text-center w-1/12">
+          </th>
+          <th class="py-3 px-6 text-center w-1/12 whitespace-nowrap">
             <%= t "admin.orders_admin.index.actions" %>
           </th> 
         </tr>

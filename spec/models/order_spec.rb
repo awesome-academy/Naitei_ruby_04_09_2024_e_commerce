@@ -55,19 +55,6 @@ RSpec.describe Order, type: :model do
       end
     end
 
-    describe ".by_username" do
-      let!(:user) { create(:user, user_name: "test_user") }
-      let!(:order_with_user) { create(:order, status: "delivered", user: user) }
-
-      it "returns orders for a specific user" do
-        expect(Order.by_username("test_user")).to include(order_with_user)
-      end
-
-      it "returns an empty array for a nonexistent user" do
-        expect(Order.by_username("nonexistent_user")).to be_empty
-      end
-    end
-
     describe ".by_status" do
       it "returns orders with the specified status" do
         expect(Order.by_status("delivered")).to include(order1)
@@ -75,12 +62,6 @@ RSpec.describe Order, type: :model do
 
       it "does not return orders with a different status" do
         expect(Order.by_status("delivered")).not_to include(order2)
-      end
-    end
-
-    describe ".sorted" do
-      it "returns orders sorted by created_at" do
-        expect(Order.sorted("created_at", "desc")).to eq([order3, order2, order1])
       end
     end
 
