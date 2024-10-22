@@ -54,4 +54,14 @@ payment_method).freeze
       status:
     )
   end
+
+  scope :created_at_month, lambda {|month|
+    where(
+      created_at: month.beginning_of_month..
+                  month.end_of_month
+    )
+  }
+  def self.cal_sum_orders orders
+    orders.sum(:total)
+  end
 end
