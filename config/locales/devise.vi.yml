@@ -8,7 +8,7 @@ vi:
       already_authenticated: "Bạn đã đăng nhập rồi."
       inactive: "Tài khoản của bạn chưa được kích hoạt."
       invalid: "Thông tin %{authentication_keys} hoặc mật khẩu không hợp lệ."
-      locked: "Tài khoản của bạn đã bị khóa."
+      locked: "Tài khoản của bạn đã bị khóa. Vui lòng kiểm tra mail để biết thêm."
       last_attempt: "Bạn còn một lần thử nghiệm nữa trước khi tài khoản của bạn bị khóa."
       not_found_in_database: "Thông tin %{authentication_keys} hoặc mật khẩu không hợp lệ."
       timeout: "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại để tiếp tục."
@@ -26,6 +26,10 @@ vi:
         reminder: "Mật khẩu của bạn sẽ không thay đổi cho đến khi bạn truy cập vào liên kết trên và tạo một mật khẩu mới."
       unlock_instructions:
         subject: "Hướng dẫn mở khóa"
+        hello: "Xin chào %{email}!"
+        locked_account: "Tài khoản của bạn đã bị khóa do quá nhiều lần đăng nhập không thành công."
+        unlock_instruction: "Nhấp vào liên kết bên dưới để mở khóa tài khoản của bạn:"
+        unlock_link: "Mở khóa tài khoản của tôi"
       email_changed:
         subject: "Địa chỉ Email Đã Thay Đổi"
       password_change:
@@ -89,6 +93,10 @@ vi:
       send_instructions: "Bạn sẽ nhận được một email với hướng dẫn cách mở khóa tài khoản của bạn trong vài phút."
       send_paranoid_instructions: "Nếu tài khoản của bạn tồn tại, bạn sẽ nhận được một email với hướng dẫn cách mở khóa tài khoản của bạn trong vài phút."
       unlocked: "Tài khoản của bạn đã được mở khóa thành công. Vui lòng đăng nhập để tiếp tục."
+      new:
+        title: "Gửi lại hướng dẫn mở khóa"
+        email: "Địa chỉ email"
+        send_instructions: "Gửi lại hướng dẫn mở khóa"
   errors:
     messages:
       already_confirmed: "đã được xác nhận, vui lòng thử đăng nhập"

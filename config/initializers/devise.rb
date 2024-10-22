@@ -13,4 +13,7 @@ Devise.setup do |config|
   config.sign_out_via = :delete
   config.responder.error_status = :unprocessable_entity
   config.responder.redirect_status = :see_other
+  config.lock_strategy = :failed_attempts
+  config.maximum_attempts = 3
+  config.unlock_strategy = :email
 end
