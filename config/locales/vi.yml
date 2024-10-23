@@ -333,6 +333,10 @@ vi:
         success: "Cập nhật đơn hàng thành công"
         error_with_order: "Không thể cập nhật đơn hàng: %{errors}"
         error_with_address: "Không thể cập nhật địa chỉ"
+      batch_update:
+        success: "Cập nhật các đơn hàng thành công"
+        error: "Không thể cập nhật các đơn hàng"
+        cancelled_order: "Đơn hàng %{order_id} đã bị hủy và không thể cập nhật."
       cancel:
         success: "Đơn hàng đã được hủy thành công."
         failure: "Không thể hủy đơn hàng."
@@ -377,6 +381,8 @@ vi:
         created_at: "Ngày tạo"
         actions: "Hành động"
         filter: "Lọc"
+        update_status: "Cập nhật trạng thái: "
+        batch_update: "Cập nhật tình trạng các đơn hàng"
       show:
         title: "Chi tiết đơn hàng số %{order_id}"
         order_info: "Thông tin đơn hàng"

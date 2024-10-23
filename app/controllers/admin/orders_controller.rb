@@ -29,7 +29,60 @@ class Admin::OrdersController < Admin::AdminController
     end
   end
 
+  def batch_update
+    order_ids = order_ids_param
+    status = status_param
+
+    ActiveRecord::Base.transaction do
+      update_orders(order_ids, status)
+    end
+
+    flash[:success] = t("admin.orders_admin.batch_update.success")
+    redirect_to admin_orders_path
+  rescue ActiveRecord::RecordInvalid => e
+    handle_batch_update_error(e)
+  end
+
   private
+
+  def update_orders order_ids, status
+    orders = Order.where(id: order_ids)
+
+    orders.each do |order|
+      if order.cancelled?
+        flash[:alert] =
+          if flash[:alert].present?
+            "#{flash[:alert]} #{t(
+              'admin.orders_admin.batch_update.cancelled_order',
+              order_id: order.id
+            )}"
+          else
+            t(
+              "admin.orders_admin.batch_update.cancelled_order",
+              order_id: order.id
+            )
+          end
+      else
+        order.update!(status:)
+        OrderEmailJob.perform_later(order, order.user, :update)
+      end
+    end
+  end
+
+  def handle_batch_update_error exception
+    flash[:alert] =
+      t("admin.orders_admin.batch_update.error",
+        errors: exception.record.errors.full_messages.join(", "))
+    redirect_to admin_orders_path
+  end
+
+  def order_ids_param
+    params[:order_ids] || []
+  end
+
+  def status_param
+    params[:status]
+  end
 
   def find_order
     @order = Order.find_by(id: params[:id])

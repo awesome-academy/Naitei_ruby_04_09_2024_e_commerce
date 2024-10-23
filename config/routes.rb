@@ -60,7 +60,11 @@ Rails.application.routes.draw do
     namespace :admin do
       get "profile", to: "dashboard#profile", as: "profile"
       get "dashboard", to: "dashboard#index", as: "dashboard"
-      resources :orders
+      resources :orders do
+        collection do
+          patch :batch_update
+        end
+      end
       resources :users do
         member do
           patch :toggle_activation

@@ -307,6 +307,10 @@ en:
         success: "Order updated successfully"
         error_with_order: "Unable to update order: %{errors}"
         error_with_address: "Unable to update address"
+      batch_update:
+        success: "Update successful orders"
+        error: "Unable to update orders"
+        cancelled_order: "Order %{order_id} has been canceled and cannot be updated."
       edit:
         title: "Edit Order Number %{order_id}"
         info_title: "Order Information"
@@ -347,6 +351,8 @@ en:
         created_at: "Created At"
         actions: "Actions"
         filter: "Filter"
+        update_status: "Update status: "
+        batch_update: "Update status Orders"
       show:
         title: "Order Detail Number %{order_id}"
         order_info: "Order Information"

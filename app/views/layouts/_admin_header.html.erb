@@ -20,7 +20,7 @@
                 <div class="w-full h-[1px] bg-primary"></div>
                 <p class="text-red-600 cursor-pointer">
                   <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                  <%= link_to t("admin.header_admin.log_out"), logout_path, data: { turbo_method: :delete, turbo_confirm: t("admin.header_admin.log_out_confirm") } %> 
+                  <%= link_to t("admin.header_admin.log_out"), destroy_user_session_path, data: { turbo_method: :delete, turbo_confirm: t("admin.header_admin.log_out_confirm") } %>
                 </p>
               </div>
             </div>

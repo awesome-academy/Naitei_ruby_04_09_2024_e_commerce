@@ -48,5 +48,17 @@ module Admin
         "bg-gray-100 text-gray-700"
       end
     end
+
+    def status_update_select_tag selected_status
+      statuses = Order.statuses.keys.reject{|status| status == "cancelled"}
+      status_options = statuses.map do |status|
+        [t("orders.status.#{status}"), status]
+      end
+
+      label_tag(:status_update, t("admin.orders_admin.index.update_status"),
+                class: "mr-2") +
+        select_tag(:status, options_for_select(status_options, selected_status),
+                   class: "form-select")
+    end
   end
 end
