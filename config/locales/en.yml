@@ -621,3 +621,5 @@ en:
     notification: "Notifications"
     no_new_notifications: "No new notifications."
     ago: "ago"
+  cancan:
+    access_denied: "You do not have permission to access this page."

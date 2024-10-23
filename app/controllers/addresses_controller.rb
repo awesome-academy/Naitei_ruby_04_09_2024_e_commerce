@@ -1,6 +1,7 @@
 class AddressesController < ApplicationController
-  before_action :set_user, :logged_in_user, :correct_user
-  before_action :set_address, only: %i(edit update destroy)
+  before_action :logged_in_user, :set_user
+  before_action :set_address, only: [:edit, :update, :destroy]
+  load_and_authorize_resource :address, through: :user
 
   def index
     @default_address = @user.addresses.default_address
@@ -18,7 +19,7 @@ class AddressesController < ApplicationController
 
     if @address.save
       flash[:success] = t ".success"
-      redirect_to user_addresses_path
+      redirect_to user_addresses_path(@user)
     else
       render :new, status: :unprocessable_entity
     end
@@ -30,7 +31,7 @@ class AddressesController < ApplicationController
     Address.set_default_false(@user) if params.dig(:address, :default) == "1"
     if @address.update address_params
       flash[:success] = t ".success"
-      redirect_to user_addresses_path
+      redirect_to user_addresses_path(@user)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -46,17 +47,10 @@ class AddressesController < ApplicationController
   end
 
   private
-  def set_user
-    @user = User.find_by id: params[:user_id]
-    return if @user
-
-    flash[:warning] = t ".not_found"
-    redirect_to root_path
-  end
 
   def set_address
-    @address = @user.addresses.find_by id: params[:id]
-    return if @address
+    address = @user.addresses.find_by(id: params[:id])
+    return if address.present?
 
     flash[:warning] = t ".not_found_address"
     redirect_to user_addresses_path(@user)
