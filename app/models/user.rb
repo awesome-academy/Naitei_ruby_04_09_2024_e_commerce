@@ -60,13 +60,25 @@ password_confirmation avatar).freeze
   end
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :lockable
+         :recoverable, :rememberable, :validatable, :lockable,
+         :omniauthable, omniauth_providers: [:google_oauth2]
 
   %i(password_reset order_confirm order_cancel
 order_update).each do |email_type|
     define_method "send_#{email_type}_email" do |*args|
       UserMailer.send(email_type, self, *args).deliver_now
     end
+  end
+
+  def self.from_google user
+    user_name = user[:name].presence || user[:email]
+
+    create_with(
+      uid: user[:uid],
+      provider: "google",
+      password: Devise.friendly_token[0, 20],
+      user_name:
+    ).find_or_create_by!(email: user[:email])
   end
 
   private

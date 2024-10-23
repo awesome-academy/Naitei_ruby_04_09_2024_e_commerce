@@ -16,4 +16,5 @@ Devise.setup do |config|
   config.lock_strategy = :failed_attempts
   config.maximum_attempts = 3
   config.unlock_strategy = :email
+  config.omniauth :google_oauth2, ENV['GOOGLE_OAUTH_CLIENT_ID'], ENV['GOOGLE_OAUTH_CLIENT_SECRET']
 end

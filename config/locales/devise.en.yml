@@ -101,3 +101,4 @@ en:
     confirmation_instructions: "Didn't receive confirmation instructions?"
     unlock_instructions: "Didn't receive unlock instructions?"
     sign_in_with: "Sign in with %{provider}"
+    or_sign_in_with: "Or sign in with"
