@@ -201,6 +201,13 @@ en:
       order_update: The order has been updated.
       instruction: "Click on the link below for detailed information."
       link: "Link to order"
+  admin_mailer:
+    monthly_summary_email:
+      subject: "Monthly Report"
+      title: "Monthly Report"
+      income: "Your income in month %{month} is %{sum}"
+      more_info: "For more information, access the detail page: "
+      statistic_page: "Statistic page"
   address:
     full_address: "Name: %{receiver_name}, Address: %{place}, Phone: %{phone}"
   orders:

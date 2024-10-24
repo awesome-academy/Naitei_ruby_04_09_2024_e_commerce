@@ -216,6 +216,13 @@ vi:
       order_update: "Đơn hàng đã được cập nhật."
       instruction: "Trạng thái đơn hàng của bạn đã được cập nhật. Nhấn vào link bên dưới để biết thông tin chi tiết."
       link: "Link đến đơn hàng"
+  admin_mailer:
+    monthly_summary_email:
+      subject: "Báo cáo thống kê hàng tháng"
+      title: "Báo cáo thống kê hàng tháng"
+      income: "Doanh thu tháng %{month} của shop là %{sum}"
+      more_info: "Để biết thêm thông tin chi tiết, hãy xem ở trang thống kê: "
+      statistic_page: "Trang thống kê"
   address:
     full_address: "Tên: %{receiver_name}, Địa chỉ: %{place}, Số điện thoại: %{phone}"
   orders: 

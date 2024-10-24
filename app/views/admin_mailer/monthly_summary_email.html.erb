@@ -1,0 +1,7 @@
+<div style="margin: 16px 0; width: 100px;">
+  <%= image_tag "https://res.cloudinary.com/dehtz255h/image/upload/v1729499112/ho7csyihuomx1d4lgp8x.svg", alt: "Logo" %>
+</div>
+<h1><%= t ".subject" %></h1>
+<p><%= t(".income", month: Time.current.month - 1, sum: @sum) %></p>
+<p><%= t ".more_info" %></p>
+<p><%= link_to t(".statistic_page"), admin_dashboard_url %></p>
