@@ -254,6 +254,8 @@ vi:
       total_cost: "%{total} ₫"
       place_order: "Đặt hàng"
       payment_method: "Phương thức thanh toán"
+    create:
+      order_fail: "Đặt hàng không thành công"
     cart_item:
       price: "Giá: %{price} ₫"
       quantity: "Số lượng: %{quantity}"
