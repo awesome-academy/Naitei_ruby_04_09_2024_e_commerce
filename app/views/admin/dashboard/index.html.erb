@@ -52,4 +52,43 @@
       </div>
     </div>
   </div>
+
+  <div class="mt-8 bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-semibold mb-4"><%= t "dashboard.monthly_revenue" %></h2>
+    <% if @monthly_revenue.empty? %>
+      <p class="text-gray-500"><%= t "dashboard.no_revenue" %></p>
+    <% else %>
+      <%= line_chart @monthly_revenue, xtitle: "#{t("dashboard.month")}", ytitle: "#{t("dashboard.revenue")}", height: "400px", legend: false %>
+    <% end %>
+  </div>
+
+  <div class="mt-8 bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-semibold mb-4"><%= t "dashboard.order_statistics" %></h2>
+    <% order_data = @order_status_counts.map { |status, data| [data[:name], data[:count]] }.to_h %>
+    <% if order_data.values.all?(&:zero?) %>
+      <p class="text-gray-500"><%= t "dashboard.no_order_data" %></p>
+    <% else %>
+      <%= column_chart order_data, xtitle: "#{t("dashboard.status")}", ytitle: "#{t("dashboard.count")}", height: "400px" %>
+    <% end %>
+  </div>
+
+  <div class="mt-8 bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-semibold mb-4"><%= t "dashboard.product_statistics" %></h2>
+    <% if @product_stock_counts.values.all?(&:zero?) %>
+      <p class="text-gray-500"><%= t "dashboard.no_product_data" %></p>
+    <% else %>
+      <% product_data = @product_stock_counts.map { |product, stock| [product.name, stock] }.to_h %>
+      <%= line_chart product_data, xtitle: "#{t("dashboard.products")}", ytitle: "#{t("dashboard.stock")}", height: "400px" %>
+    <% end %>
+  </div>
+
+  <div class="mt-8 bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-semibold mb-4"><%= t "dashboard.rating_statistics" %></h2>
+    <% if @rating_counts.values.all?(&:zero?) %>
+      <p class="text-gray-500"><%= t "dashboard.no_rating_data" %></p>
+    <% else %>
+      <%= pie_chart @rating_counts, legend: true, height: "400px", labels: @rating_counts.keys.map { |star| "#{star} #{t("dashboard.stars")}" } %>
+    <% end %>
+  </div>
+
 </div>
