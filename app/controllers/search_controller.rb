@@ -20,7 +20,7 @@ class SearchController < ApplicationController
   end
 
   def perform_search
-    @categories = Category.by_name(@query)
-    @products = Product.search_by_name(@query)
+    @categories = Category.by_name(@query).ransack.result || Category.none
+    @products = Product.ransack(name_cont: @query).result || Product.none
   end
 end

@@ -12,20 +12,39 @@ class Category < ApplicationRecord
     where("categories.name LIKE ?", "%#{name}%") if name.present?
   }
 
-  scope :sorted, lambda {|sort_by, direction|
-    column = %w(name created_at).include?(sort_by) ? sort_by : "created_at"
-    direction = %w(asc desc).include?(direction) ? direction : "asc"
-    order(column => direction)
+  scope :search, lambda {|query|
+    results = by_name(query)
+    if query.present? && query.match?(/^\d{2}-\d{2}-\d{4}$/)
+      date = begin
+        Date.strptime(query, "%d-%m-%Y")
+      rescue StandardError
+        nil
+      end
+      if date
+        results = results.or(where("DATE(categories.created_at) = ?", date))
+      end
+    end
+    results
   }
 
-  scope :sort_by_params, lambda {|params|
-    by_name(params[:name])
-      .sorted(params[:sort], params[:direction])
-  }
   def self.with_product_count
     left_joins(:products)
       .select("categories.*, COUNT(products.id) AS products_count")
       .group("categories.id")
+  end
+
+  class << self
+    def ransackable_scopes auth_object = nil
+      if auth_object&.role == "admin"
+        [:by_name, :search]
+      else
+        [:by_name]
+      end
+    end
+
+    def ransackable_attributes _auth_object = nil
+      %w(created_at name)
+    end
   end
 
   def products_count

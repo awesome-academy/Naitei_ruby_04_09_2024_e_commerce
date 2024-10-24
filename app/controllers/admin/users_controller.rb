@@ -2,7 +2,12 @@ class Admin::UsersController < Admin::AdminController
   before_action :find_user, only: %i(show edit update destroy toggle_activation)
 
   def index
-    @pagy, @users = pagy User.filtered_and_sorted(params)
+    @q = User.ransack(params[:q])
+    @users = @q.result(distinct: true)
+               .by_activation_status(params[:activated])
+               .by_role(params[:role])
+
+    @pagy, @users = pagy(@users, limit: Settings.page_size)
   end
 
   def show; end

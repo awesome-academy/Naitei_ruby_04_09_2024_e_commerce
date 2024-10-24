@@ -25,26 +25,42 @@ payment_method).freeze
 
   scope :ordered_by_updated_at, ->{order(updated_at: :desc)}
 
-  scope :by_username, lambda {|user_name|
-    joins(:user).where(users: {user_name:}) if user_name.present?
-  }
-
-  scope :by_status, ->(status){where(status:) if status.present?}
-
-  scope :sorted, lambda {|sort_column, sort_direction|
-    valid_columns = %w(created_at total)
-    if valid_columns.include?(sort_column)
-      order("#{sort_column} #{sort_direction}")
-    else
-      order("created_at desc")
+  scope :search, lambda {|query|
+    if query.present?
+      joins(:user, :address)
+        .where("users.user_name LIKE :query OR addresses.receiver_name
+        LIKE :query", query: "%#{query}%")
     end
   }
+  scope :by_status, ->(status){where(status:) || all}
+
   scope :total_revenue, ->{where(status: "delivered").sum(:total)}
 
   scope :with_status, lambda {|status|
                         where(status:) if statuses.key?(status)
                       }
+  class << self
+    def ransackable_attributes _auth_object = nil
+      %w(created_at id status total)
+    end
 
+    def sort_by sort_column, sort_direction
+      valid_columns = %w(created_at total)
+      if valid_columns.include?(sort_column)
+        order("#{sort_column} #{sort_direction}")
+      else
+        order("created_at desc")
+      end
+    end
+
+    def cal_sum_orders orders
+      orders.sum(:total)
+    end
+
+    def ransackable_scopes _auth_object = nil
+      [:search]
+    end
+  end
   def send_order_notification
     Notification.create!(
       user:,
@@ -61,7 +77,4 @@ payment_method).freeze
                   month.end_of_month
     )
   }
-  def self.cal_sum_orders orders
-    orders.sum(:total)
-  end
 end

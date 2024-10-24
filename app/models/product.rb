@@ -18,11 +18,6 @@ class Product < ApplicationRecord
                            less_than_or_equal_to: Settings.value.rate_max},
             allow_nil: true
 
-  scope :search_by_name, ->(query){where("products.name LIKE ?", "%#{query}%")}
-  scope :by_category, lambda {|category_id|
-                        where(category_id:) if category_id.present?
-                      }
-  scope :filtered, ->(params){by_category(params[:category]).distinct}
   scope :sorted, lambda {|sort_by, direction|
     column = if %w(name price stock created_at).include?(sort_by)
                sort_by
@@ -31,8 +26,40 @@ class Product < ApplicationRecord
              end
     order(column => direction)
   }
+
   scope :highest_rated, ->{order(rating: :desc).first}
 
+  ransack_alias :product_name, :name
+  ransack_alias :category_name, "categories.name"
+  ransack_alias :price, :price
+  ransack_alias :stock, :stock
+
+  scope :search_all, lambda {|query|
+    if query.present?
+      query_value = query.to_f
+      joins(:category).where(
+        "products.name LIKE :query OR categories.name LIKE :query",
+        query: "%#{query}%"
+      ).or(
+        where(products: {price: query_value}).or(
+          where(products: {stock: query_value})
+        )
+      )
+    end
+  }
+  class << self
+    def ransackable_scopes _auth_object = nil
+      %i(search_all)
+    end
+
+    def ransackable_attributes _auth_object = nil
+      %w(name price stock category_id product_name category_name)
+    end
+
+    def ransackable_associations _auth_object = nil
+      %w(category)
+    end
+  end
   def review_by_user user
     reviews.includes(:user).find_by(user_id: user.id)
   end

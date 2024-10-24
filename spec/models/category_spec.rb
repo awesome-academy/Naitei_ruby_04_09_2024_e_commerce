@@ -27,15 +27,6 @@ RSpec.describe Category, type: :model do
       end
     end
 
-    describe ".sorted" do
-      it "returns categories sorted by name in ascending order" do
-        expect(Category.sorted("name", "asc")).to eq([category1, category2])
-      end
-
-      it "returns categories sorted by created_at in ascending order" do
-        expect(Category.sorted("created_at", "asc")).to eq([category1, category2])
-      end
-    end
 
     describe ".with_product_count" do
       it "returns categories with product count" do

@@ -3,13 +3,9 @@ class Admin::ProductsController < Admin::AdminController
   before_action :find_product, only: %i(show edit update destroy)
 
   def index
-    direction = (params[:direction]&.to_sym if %i(asc
-desc).include?(params[:direction]&.to_sym)) || :asc
-    @pagy, @products = pagy(Product.filtered(params)
-                                   .search_by_name(params[:name])
-                                   .sorted(params[:sort], direction)
-                                   .distinct)
-    @categories = Category.all.pluck(:name, :id)
+    @q = Product.ransack(params[:q])
+    @pagy, @products = pagy(@q.result(distinct: true))
+    @categories = Category.pluck(:name, :id)
   end
 
   def show; end
@@ -54,6 +50,18 @@ desc).include?(params[:direction]&.to_sym)) || :asc
   end
 
   private
+
+  def search_products
+    direction = sort_direction
+    @q.result(distinct: true)
+      .sorted(params[:sort], direction)
+      .distinct
+  end
+
+  def sort_direction
+    (params[:direction]&.to_sym if %i(asc
+desc).include?(params[:direction]&.to_sym)) || :asc
+  end
 
   def find_product
     @product = Product.find_by(id: params[:id])

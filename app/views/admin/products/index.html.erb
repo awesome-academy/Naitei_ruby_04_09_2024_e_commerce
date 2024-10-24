@@ -8,17 +8,42 @@
       <i class="fa fa-sync-alt"></i>
     <% end %>
     <div class="flex-grow mx-4 flex justify-center">
-      <%= form_with url: admin_products_path, method: :get, local: true do %>
-        <%= text_field_tag :name, params[:name], placeholder: t("admin.products_admin.index.search_by_name"), class: "border rounded-lg py-2 px-4 mr-2" %>
-        <%= submit_tag t("admin.products_admin.index.search"), class: "bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary_hover" %>
+      <%= search_form_for @q, url: admin_products_path, method: :get, local: true do |f| %>
+        <%= f.text_field :search_all, placeholder: t("admin.products_admin.index.search"), class: "border rounded-lg py-2 px-4 mr-2" %>
+        <%= f.submit t("admin.products_admin.index.search"), class: "bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary_hover" %>
       <% end %>
     </div>
     <div>
-      <%= label_tag :category, t("admin.products_admin.form.category"), class: "block text-sm font-medium text-gray-700" %>
-      <%= form_with url: admin_products_path, method: :get, local: true, class: "inline-block" do %>
-        <%= select_tag :category, options_for_select(@categories, params[:category]), class: "form-select" %>
-        <%= submit_tag t("admin.products_admin.index.filter"), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" onclick="openModal()">
+        <%= t("admin.products_admin.index.advanced_search") %>
+      </button>
+    </div>
+  </div>
+  <div id="advancedSearchModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg p-8 w-1/3">
+      <h2 class="text-2xl mb-4"><%= t("admin.products_admin.index.advanced_search_title") %></h2>
+      <%= search_form_for @q, url: admin_products_path, method: :get, local: true do |f| %>
+        <div class="mb-4">
+          <%= f.label :price_gteq, t("admin.products_admin.index.price_greater_than_label"), class: "block text-sm font-medium text-gray-700" %>
+          <%= f.number_field :price_gteq, placeholder: t("admin.products_admin.index.price_greater_than_placeholder"), class: "border rounded-lg py-2 px-4 w-full", step: 1000 %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :price_lteq, t("admin.products_admin.index.price_less_than_label"), class: "block text-sm font-medium text-gray-700" %>
+          <%= f.number_field :price_lteq, placeholder: t("admin.products_admin.index.price_less_than_placeholder"), class: "border rounded-lg py-2 px-4 w-full", step: 1000 %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :stock_gteq, t("admin.products_admin.index.stock_greater_than_label"), class: "block text-sm font-medium text-gray-700" %>
+          <%= f.number_field :stock_gteq, placeholder: t("admin.products_admin.index.stock_greater_than_placeholder"), class: "border rounded-lg py-2 px-4 w-full" %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :stock_lteq, t("admin.products_admin.index.stock_less_than_label"), class: "block text-sm font-medium text-gray-700" %>
+          <%= f.number_field :stock_lteq, placeholder: t("admin.products_admin.index.stock_less_than_placeholder"), class: "border rounded-lg py-2 px-4 w-full" %>
+        </div>
+        <%= f.submit t("admin.products_admin.index.search"), class: "bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary_hover w-full" %>
       <% end %>
+      <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 mt-4" onclick="closeModal()">
+        <%= t("admin.products_admin.index.close") %>
+      </button>
     </div>
   </div>
   <table class="min-w-full bg-white border rounded-lg shadow-md overflow-hidden table-fixed">
@@ -29,31 +54,22 @@
         </th> 
         <th class="py-3 px-6 text-left w-3/12 border-r border-gray-200">
           <div class="flex justify-between items-center">
-            <span class="flex-grow"><%= t "admin.products_admin.index.name" %></span>
-            <%= link_to admin_products_path(sort: "name", direction: params[:direction] == "asc" ? "desc" : "asc"), class: "text-white hover:text-gray-400 ml-2" do %>
-              <i class="fa fa-sort-alpha-<%= params[:direction] == 'asc' ? 'up' : 'down' %>"></i>
-            <% end %>
+            <span class="flex-grow"><%= sort_link(@q, :name, t("admin.products_admin.index.name")) %></span>
           </div>
-        </th> 
+        </th>
         <th class="py-3 px-6 text-left w-2/12 border-r border-gray-200">
           <%= t "admin.products_admin.index.category" %>
         </th> 
         <th class="py-3 px-6 text-left w-2/12 border-r border-gray-200">
           <div class="flex justify-between items-center">
-            <span class="flex-grow"><%= t "admin.products_admin.index.price" %></span>
-            <%= link_to admin_products_path(sort: "price", direction: params[:direction] == "asc" ? "desc" : "asc"), class: "text-white hover:text-gray-400 ml-2" do %>
-              <i class="fa fa-sort-alpha-<%= params[:direction] == 'asc' ? 'up' : 'down' %>"></i>
-            <% end %>
+            <span class="flex-grow"><%= sort_link(@q, :price, t("admin.products_admin.index.price")) %></span>
           </div>
-        </th> 
+        </th>
         <th class="py-3 px-6 text-left w-1/12 border-r border-gray-200">
           <div class="flex justify-between items-center">
-            <span class="flex-grow"><%= t "admin.products_admin.index.stock" %></span>
-            <%= link_to admin_products_path(sort: "stock", direction: params[:direction] == "asc" ? "desc" : "asc"), class: "text-white hover:text-gray-400 ml-2" do %>
-              <i class="fa fa-sort-alpha-<%= params[:direction] == 'asc' ? 'up' : 'down' %>"></i>
-            <% end %>
+            <span class="flex-grow"><%= sort_link(@q, :stock, t("admin.products_admin.index.stock")) %></span>
           </div>
-        </th> 
+        </th>
         <th class="py-3 px-6 text-center w-2/12">
           <%= t "admin.products_admin.index.actions" %>
         </th> 
@@ -68,4 +84,5 @@
   <div style="display: flex; justify-content: center;">
     <%= render "pagy/pagy_nav", pagy: @pagy %>
   </div>
+  <%= javascript_include_tag "product" %>
 </div>

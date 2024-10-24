@@ -32,32 +32,17 @@ password_confirmation avatar).freeze
             length: {minimum: Settings.value.min_user_password},
             allow_nil: true
 
-  scope :search_by_user_name, lambda {|query|
-                                if query.present?
-                                  where("user_name LIKE ?", "%#{query}%")
-                                end
-                              }
   scope :by_activation_status, lambda {|status|
-                                 where(activated: status) if status.present?
-                               }
+    where(activated: status) if status.present?
+  }
+
+  scope :by_role, lambda {|role|
+    where(role:) if role.present?
+  }
+
   scope :sorted, lambda {|column, direction|
     order("#{column} #{direction}") if column.present?
   }
-  scope :by_role, lambda {|role|
-                    where(role:) if role.present?
-                  }
-  scope :filtered_and_sorted, lambda {|params|
-    search_by_user_name(params[:user_name])
-      .by_activation_status(params[:activated])
-      .by_role(params[:role])
-      .sorted(params[:sort], params[:direction])
-  }
-  def self.top_user
-    joins(:orders)
-      .group("users.id")
-      .order("COUNT(orders.id) DESC")
-      .first
-  end
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :lockable,
@@ -69,8 +54,27 @@ order_update).each do |email_type|
       UserMailer.send(email_type, self, *args).deliver_now
     end
   end
+  class << self
+    def ransackable_attributes _auth_object = nil
+      %w(email user_name)
+    end
 
-  def self.from_google user
+    def ransackable_scopes _auth_object = nil
+      [:by_activation_status, :by_role, :sorted]
+    end
+
+    def ransackable_associations _auth_object = nil
+      %w(addresses orders reviews)
+    end
+
+    def top_user
+      joins(:orders)
+        .group("users.id")
+        .order("COUNT(orders.id) DESC")
+        .first
+    end
+  end
+  def from_google user
     user_name = user[:name].presence || user[:email]
 
     create_with(

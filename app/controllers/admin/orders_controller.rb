@@ -3,10 +3,10 @@ class Admin::OrdersController < Admin::AdminController
   before_action :find_order, only: %i(show edit update)
 
   def index
+    @q = Order.ransack(params[:q])
     @pagy, @orders = pagy(
-      filtered_orders
-        .by_username(params[:user_name])
-        .sorted(params[:sort], params[:direction])
+      filtered_orders(@q.result)
+        .ordered_by_updated_at
     )
   end
 
@@ -132,7 +132,11 @@ class Admin::OrdersController < Admin::AdminController
     @order.errors.full_messages.join(", ")
   end
 
-  def filtered_orders
-    Order.by_status(params[:status])
+  def filtered_orders orders
+    if params[:status].present?
+      orders.by_status(params[:status])
+    else
+      orders
+    end
   end
 end
