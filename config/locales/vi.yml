@@ -708,4 +708,9 @@ vi:
       login_required: "Bạn cần đăng nhập để sử dụng ứng dụng."
       forbidden_access: "Bạn không có quyền truy cập."
       invalid_credentials: "Email/mật khẩu không hợp lệ"
+    carts:
+      item_added: "Thêm sản phẩm thành công."
+      item_increment_success: "Tăng số lượng sản phẩm thành công."
+      item_increment_fail: "Tăng số lượng sản phẩm thất bại."
+      item_decrement_success: "Giảm số lượng sản phẩm thành công."
 

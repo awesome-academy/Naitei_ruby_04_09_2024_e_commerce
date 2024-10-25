@@ -82,7 +82,15 @@ Rails.application.routes.draw do
       namespace :admin do
         resources :products, only: %i(index show create update destroy)
       end
-      post 'login', to: 'auths#login'
+      post "login", to: "auths#login"
+      resources :carts, only: :show do
+        post "add_item", on: :collection
+        member do
+          post "increment_item"
+          post "decrement_item"
+          delete "remove_item"
+        end
+      end
     end
   end
 end

@@ -11,14 +11,21 @@ class Api::V1::ApplicationController < ActionController::API
 
     return if @current_user
 
-    render json: {error: I18n.t("errors.login_required")},
+    render json: {error: I18n.t("api.errors.login_required")},
            status: :unauthorized
   end
 
   def authenticate_admin!
     return if @current_user&.admin?
 
-    render json: {error: I18n.t("errors.forbidden_access")},
+    render json: {error: I18n.t("api.errors.forbidden_access")},
+           status: :forbidden
+  end
+
+  def correct_user
+    return if @current_user == @user
+
+    render json: {error: I18n.t("api.errors.forbidden_access")},
            status: :forbidden
   end
 end
