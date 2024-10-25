@@ -702,3 +702,9 @@ vi:
     ago: "trước"
   cancan:
     access_denied: "Bạn không có quyền truy cập trang này."
+  api:
+    errors:
+      login_required: "Bạn cần đăng nhập để sử dụng ứng dụng."
+      forbidden_access: "Bạn không có quyền truy cập."
+      invalid_credentials: "Email/mật khẩu không hợp lệ"
+
