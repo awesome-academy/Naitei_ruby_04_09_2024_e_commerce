@@ -35,7 +35,7 @@ class Admin::ProductsController < Admin::AdminController
       redirect_to admin_product_path(@product)
     end
   rescue ActiveRecord::RecordInvalid => e
-    handle_create_update_error(e)
+    handle_update_error(e)
   end
 
   def destroy
@@ -83,14 +83,9 @@ desc).include?(params[:direction]&.to_sym)) || :asc
   end
 
   def handle_update_error exception
-    flash[:alert] = if exception.record == @order
-                      t(
-                        "admin.orders_admin.update.error_with_order",
-                        errors: exception.record.errors.full_messages.join(", ")
-                      )
-                    else
-                      t("admin.orders_admin.update.error_with_address")
-                    end
-    redirect_to edit_admin_order_path(@order), status: :unprocessable_entity
+    flash[:alert] =
+      t("admin.products_admin.update.error", error: exception.message)
+    redirect_to edit_admin_product_path(@product),
+                status: :unprocessable_entity
   end
 end
