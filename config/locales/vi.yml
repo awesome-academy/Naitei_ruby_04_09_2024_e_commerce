@@ -613,6 +613,7 @@ vi:
         price: "Giá"
         stock: "Kho"
         actions: "Hành động"
+        close: "Đóng"
       edit:
         title: "Chỉnh sửa danh mục: %{category_name}"
         info_title: "Thông tin danh mục"

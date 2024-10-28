@@ -39,18 +39,15 @@ payment_method).freeze
   scope :with_status, lambda {|status|
                         where(status:) if statuses.key?(status)
                       }
+  scope :created_at_month, lambda {|month|
+                             where(
+                               created_at: month.beginning_of_month..
+                                           month.end_of_month
+                             )
+                           }
   class << self
     def ransackable_attributes _auth_object = nil
       %w(created_at id status total)
-    end
-
-    def sort_by sort_column, sort_direction
-      valid_columns = %w(created_at total)
-      if valid_columns.include?(sort_column)
-        order("#{sort_column} #{sort_direction}")
-      else
-        order("created_at desc")
-      end
     end
 
     def cal_sum_orders orders
@@ -70,11 +67,4 @@ payment_method).freeze
       status:
     )
   end
-
-  scope :created_at_month, lambda {|month|
-    where(
-      created_at: month.beginning_of_month..
-                  month.end_of_month
-    )
-  }
 end

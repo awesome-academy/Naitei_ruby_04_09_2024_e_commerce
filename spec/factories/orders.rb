@@ -5,7 +5,7 @@ FactoryBot.define do
     total { Faker::Commerce.price(range: 10..100.0) }
     payment_method { "cash_on_delivery" } 
     status { Order.statuses.keys.sample }
-    cancel_reason { nil } 
+    cancel_reason { "No access" } 
 
     trait :cancelled do
       status { :cancelled }

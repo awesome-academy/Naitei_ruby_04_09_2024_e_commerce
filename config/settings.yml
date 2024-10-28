@@ -12,6 +12,7 @@ value:
   rate_min: 1
   reset_expired_time: 2
   rate_max: 5
+  valid_date: !ruby/regexp /^\d{2}-\d{2}-\d{4}$/
 ui:
   avatar_size: 150
   default_avatar_size: 80

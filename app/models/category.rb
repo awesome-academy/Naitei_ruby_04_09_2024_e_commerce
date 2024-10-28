@@ -14,7 +14,7 @@ class Category < ApplicationRecord
 
   scope :search, lambda {|query|
     results = by_name(query)
-    if query.present? && query.match?(/^\d{2}-\d{2}-\d{4}$/)
+    if query.present? && query.match?(Settings.value.valid_date)
       date = begin
         Date.strptime(query, "%d-%m-%Y")
       rescue StandardError
