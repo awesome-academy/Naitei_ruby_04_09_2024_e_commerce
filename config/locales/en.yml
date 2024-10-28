@@ -663,3 +663,8 @@ en:
     ago: "ago"
   cancan:
     access_denied: "You do not have permission to access this page."
+  api:
+    errors:
+      login_required: "You need to log in to use the app."
+      forbidden_access: "You do not have permission to access this."
+      invalid_credentials: "Invalid email/password combination"

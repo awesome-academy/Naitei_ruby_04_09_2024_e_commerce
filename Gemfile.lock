@@ -46,6 +46,11 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_model_serializers (0.10.14)
+      actionpack (>= 4.1)
+      activemodel (>= 4.1)
+      case_transform (>= 0.2)
+      jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     activejob (7.0.7)
       activesupport (= 7.0.7)
       globalid (>= 0.3.6)
@@ -86,6 +91,8 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    case_transform (0.2)
+      activesupport
     chartkick (5.1.1)
     chronic (0.10.2)
     concurrent-ruby (1.2.2)
@@ -150,6 +157,7 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     json (2.6.3)
+    jsonapi-renderer (0.2.2)
     jwt (2.9.3)
       base64
     kredis (1.7.0)
@@ -410,6 +418,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  active_model_serializers
   bcrypt (~> 3.1.7)
   bootsnap
   cancancan
@@ -427,6 +436,7 @@ DEPENDENCIES
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
+  jwt
   kredis
   mysql2 (~> 0.5)
   omniauth-google-oauth2

@@ -3,6 +3,7 @@ git_source(:github){|repo| "https://github.com/#{repo}.git"}
 
 ruby "3.2.2"
 
+gem "active_model_serializers"
 gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
 gem "cancancan"
@@ -17,6 +18,7 @@ gem "groupdate"
 gem "image_processing", "~> 1.2"
 gem "importmap-rails"
 gem "jbuilder"
+gem "jwt"
 gem "kredis"
 gem "mysql2", "~> 0.5"
 gem "omniauth-google-oauth2"

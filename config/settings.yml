@@ -22,3 +22,4 @@ ui:
   reviews_limit: 5
 index_size: 4
 page_size: 8
+algorithm: "HS256"
