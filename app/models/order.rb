@@ -24,7 +24,7 @@ payment_method).freeze
   after_create :send_order_notification
 
   scope :ordered_by_updated_at, ->{order(updated_at: :desc)}
-
+  scope :by_ids, ->(ids){where(id: ids) if ids.present?}
   scope :search, lambda {|query|
     if query.present?
       joins(:user, :address)

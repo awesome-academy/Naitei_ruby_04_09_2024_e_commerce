@@ -1,29 +1,28 @@
-class Admin::OrdersController < Admin::AdminController
-  include Pagy::Backend
-  before_action :find_order, only: %i(show edit update)
+class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
+  before_action :find_order, only: %i(show update)
 
   def index
     @q = Order.ransack(params[:q])
-    @pagy, @orders = pagy(
-      filtered_orders(@q.result)
-        .ordered_by_updated_at
-    )
+    @orders = filtered_orders(@q.result.order(id: :desc))
+    render json: @orders, each_serializer: OrderSerializer, status: :ok
   end
 
   def show
-    @product = @order.products
+    render json: @order, serializer: OrderSerializer, status: :ok
   end
-
-  def edit; end
 
   def update
     ActiveRecord::Base.transaction do
       handle_cancel_order if cancel_reason_present?
       @order.update!(order_params)
-      @order.address.update!(address_params)
-      flash[:success] = t("admin.orders_admin.update.success")
+
+      if params[:order][:address].present? && @order.address.present?
+        @order.address.update!(address_params)
+      end
+
       OrderEmailJob.perform_later(@order, @order.user, :update)
-      redirect_to admin_order_path(@order)
+      render json: {message: I18n.t("admin.orders_admin.update.success")},
+             status: :ok
     rescue ActiveRecord::RecordInvalid => e
       handle_update_error(e)
     end
@@ -37,8 +36,8 @@ class Admin::OrdersController < Admin::AdminController
       update_orders(order_ids, status)
     end
 
-    flash[:success] = t("admin.orders_admin.batch_update.success")
-    redirect_to admin_orders_path
+    render json: {message: I18n.t("admin.orders_admin.batch_update.success")},
+           status: :ok
   rescue ActiveRecord::RecordInvalid => e
     handle_batch_update_error(e)
   end
@@ -50,18 +49,7 @@ class Admin::OrdersController < Admin::AdminController
 
     orders.each do |order|
       if order.cancelled?
-        flash[:alert] =
-          if flash[:alert].present?
-            "#{flash[:alert]} #{t(
-              'admin.orders_admin.batch_update.cancelled_order',
-              order_id: order.id
-            )}"
-          else
-            t(
-              "admin.orders_admin.batch_update.cancelled_order",
-              order_id: order.id
-            )
-          end
+        add_cancelled_order_alert(order)
       else
         order.update!(status:)
         OrderEmailJob.perform_later(order, order.user, :update)
@@ -69,11 +57,17 @@ class Admin::OrdersController < Admin::AdminController
     end
   end
 
+  def add_cancelled_order_alert order
+    flash[:alert] ||= ""
+    flash[:alert] += "#{t('admin.orders_admin.batch_update.cancelled_order',
+                          order_id: order.id)} "
+  end
+
   def handle_batch_update_error exception
-    flash[:alert] =
-      t("admin.orders_admin.batch_update.error",
-        errors: exception.record.errors.full_messages.join(", "))
-    redirect_to admin_orders_path
+    render json: {
+      error: t("admin.orders_admin.batch_update.error",
+               errors: exception.record.errors.full_messages.join(", "))
+    }, status: :unprocessable_entity
   end
 
   def order_ids_param
@@ -88,18 +82,17 @@ class Admin::OrdersController < Admin::AdminController
     @order = Order.find_by(id: params[:id])
     return if @order
 
-    flash[:alert] = t ".not_found"
-    redirect_to root_path
+    render json: {error: I18n.t("admin.orders_admin.not_found")},
+           status: :not_found
   end
 
   def order_params
-    params.require(:order).permit Order::UPDATE_ORDER_ADMIN
+    params.require(:order).permit(Order::UPDATE_ORDER_ADMIN)
   end
 
   def address_params
-    params.require(:order).require(:address).permit(
-      Address::ADDRESS_REQUIRE_ATTRIBUTES
-    )
+    params.require(:order).require(:address)
+          .permit(Address::ADDRESS_REQUIRE_ATTRIBUTES)
   end
 
   def cancel_reason_present?
@@ -119,13 +112,14 @@ class Admin::OrdersController < Admin::AdminController
   end
 
   def handle_update_error exception
-    flash[:alert] = if exception.record == @order
-                      t("admin.orders_admin.update.error_with_order",
-                        errors: order_errors_message)
-                    else
-                      t("admin.orders_admin.update.error_with_address")
-                    end
-    redirect_to edit_admin_order_path(@order), status: :unprocessable_entity
+    render json: {
+      error: if exception.record == @order
+               t("admin.orders_admin.update.error_with_order",
+                 errors: order_errors_message)
+             else
+               t("admin.orders_admin.update.error_with_address")
+             end
+    }, status: :unprocessable_entity
   end
 
   def order_errors_message
