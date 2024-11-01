@@ -81,6 +81,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       namespace :admin do
         resources :products, only: %i(index show create update destroy)
+        resources :orders, only: %i(index show update) do
+          collection do
+            patch :batch_update
+          end
+        end
       end
       post "login", to: "auths#login"
       resources :carts, only: :show do
@@ -89,6 +94,13 @@ Rails.application.routes.draw do
           post "increment_item"
           post "decrement_item"
           delete "remove_item"
+        end
+      end
+      resources :users do
+        resources :orders, only: [:index, :show, :create, :update] do
+          member do
+            patch :cancel
+          end
         end
       end
     end
